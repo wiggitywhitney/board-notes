@@ -51,3 +51,65 @@ DONT TRUST THE HOST
 
 - The owner of the VM should know what is running     } ATTESTATION
   everything about the VM itself
+
+---
+
+## ISOLATION
+
+The secure place can be called:
+- guest
+- enclave
+- realm
+- Trusted Execution Env (TEE)
+
+Attestation supplies evidence that the secure place is secure
+
+- For example, secrets are only supplied to guest after guest is attested
+- KBS (key broker service) in a trusted place
+
+Architecture diagram:
+
+VM:
+- imageRS
+- CDH
+- AA
+- KATA AGENT
+- WORKLOAD POD
+
+K8s:
+- KATA SHIM
+- KUBELET
+
+CC - ENABLED HARDWARE
+
+3 things:
+① put 1 pod in VM
+② pull image inside VM
+③ decrypt image/get secrets
+
+---
+
+## Components of Confidential Containers
+
+Virtual machine(s)
+
+- KATA shim on the host
+  - receives container requests
+  - makes a VM
+  - forwards container request into VM
+
+- KATA Agent in VM
+  - receives container requests
+  - does whatever ex CRUD
+
+- one pod in the VM
+
+- CoCo snapshotter talks to imageRS on the host
+- imageRS downloads the image inside VM
+
+- KBS = key broker service - runs in another location - receives evidence from CDH/AA, verifies it, releases keys to unpack image or whatever secrets
+
+- Confidential data hub (CDH) & Attestation Agent (AA) run on VM
+  work together to get hardware evidence from the guest, then
+  sets up a secure connection w KBS
+  → makes the attestation
