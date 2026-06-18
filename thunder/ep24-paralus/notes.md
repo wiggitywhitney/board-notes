@@ -43,18 +43,18 @@ sequenceDiagram
 
 ## After Paralus (many → 100s of devs)
 
-Saim Dev, Nuno Dev, Whitney DevOps — sitting on top of Paralus
-
-**Paralus** = Dashboard, API, Terraform module
-
-*A layer between humans and clusters*
-
 ```mermaid
 flowchart LR
+  Saim["Saim Dev"]
+  Nuno["Nuno Dev"]
+  Whitney["Whitney DevOps"]
   P["Paralus\n(Dashboard, API, Terraform module)\nA layer between humans and clusters"]
   EKS["EKS Kubernetes cluster\n(dev namespace)"]
   GKE["GKE Kubernetes cluster\n(dev namespace)"]
   OP["on-prem Kubernetes cluster"]
+  Saim --> P
+  Nuno --> P
+  Whitney --> P
   P --> EKS
   P --> GKE
   P --> OP
