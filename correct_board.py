@@ -36,7 +36,14 @@ def correct_board_image(src_path, dst_path):
     b = b.point(rolloff_lut)
     img = Image.merge('RGB', (r, g, b))
 
-    img.save(dst_path, quality=95)
+    # 6. Resize: long side max 1920px
+    w, h = img.size
+    max_side = max(w, h)
+    if max_side > 1920:
+        scale = 1920 / max_side
+        img = img.resize((int(w * scale), int(h * scale)), Image.LANCZOS)
+
+    img.save(dst_path, format='JPEG', quality=90)
     print(f"Corrected: {src_path} -> {dst_path}")
 
 if __name__ == '__main__':
