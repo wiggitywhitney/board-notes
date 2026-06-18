@@ -1,30 +1,60 @@
 ## Before Paralus
 
-Whitney (Dev) ↔ Devops → Use RBAC creates roles for each user
+```mermaid
+sequenceDiagram
+  participant S as Saim Dev (+ 100s of devs)
+  participant W as Whitney DevOps
+  participant K as Kubernetes cluster
+  S->>W: Can I have cluster access?
+  W->>W: Uses Role-Based Access Control (RBAC) to create a role for Dev Saim and limits what that role can access
+  W-->>S: Yes
+  S->>K: Does stuff in the cluster
+```
 
 ### Problems with this method
 
-- hard to scale RBAC
-  - Assign a user to team
-  - Assign a user to role for that role for access
-- hard to audit
-  - admins don't always know who has access to what
-- hard to integrate w/ external providers (e.g., GitHub, GitLab)
-- tedious, manual process
-- dormant Scale
+1. Hard to scope RBAC
+   - Might give too much or too little access
+2. Hard to audit
+   - Weeks from now, how do you know who has access to what?
+3. Hard to integrate with integration providers
+   - For example, GitHub and GitLab
+4. Tedious manual process
+   - Write YAML for role, write YAML for role binding
+5. What happens when people leave the company?
+   - Scripting is often used for this
+6. No troubleshooting mechanism
+7. Doesn't scale
 
 ---
 
-## Paralus is a tool that helps you simply streamline RBAC operations, while enhances security
+## Paralus is a tool that helps you simplify and streamline RBAC operations, which enhances security
+
+---
+
+## Set Up Paralus
+
+1. Dev asks DevOps for access to dev namespace
+2. DevOps accesses Paralus dashboard with Single Sign-On (SSO)
+3. DevOps eng creates a Dev group and adds Dev engineer Saim to the group
+4. The Paralus Dev group is made up of people who can access the dev namespace
+
+---
+
+## After Paralus (many → 100s of devs)
+
+Saim Dev, Nuno Dev, Whitney DevOps — sitting on top of Paralus
+
+**Paralus** = Dashboard, API, Terraform module
+
+*A layer between humans and clusters*
 
 ```mermaid
 flowchart LR
-  P[PARALUS]
-  K8s["K8s cluster"]
-  EKS["EKS K8s cluster"]
-  GKE["GKE K8s cluster"]
-  OP["on prem K8s cluster"]
-  P --> K8s
+  P["Paralus\n(Dashboard, API, Terraform module)\nA layer between humans and clusters"]
+  EKS["EKS Kubernetes cluster\n(dev namespace)"]
+  GKE["GKE Kubernetes cluster\n(dev namespace)"]
+  OP["on-prem Kubernetes cluster"]
   P --> EKS
   P --> GKE
   P --> OP
@@ -32,45 +62,37 @@ flowchart LR
 
 ---
 
-## Set Up Paralus
-
-1. Dev sets up devices for devs to dev namespace
-2. Devops ties group to dev namespace to single sign on
-3. What happens when people leave the company → devops easily removes from the group
-4. The devs who can access the dev namespace
-
----
-
-## After Paralus (many → 100s of devs)
-
-### DIY Operations
-
-- Devs can: access Paralus dashboard (log in via SSO)
-- Devs can only access their dashboard & workspace (dev namespace)
-- Devs can customize their dashboard
-- Devs can use custom permissions
-
----
-
 ## PARALUS MAIN POINTS
 
-### 1. AIDS IN AUTHENTICATION
-- by integrating w/ many SSO providers
+### 1. Aids in authentication
+- By integrating with many SSO providers
 
-### 2. ACCESS CONTROL
-- Access to one or many clusters
-- admins can create projects for dev, staging, prod, and enforce it to role
+### 2. Access control
+- People can access one or many clusters
+- Cluster admins can create and enforce policies based on identity and role
 
-### 3. AUDITABILITY
-- tracks all user activity
-- tracks kubectl activity
-- provides reports
+### 3. Auditability
+- Logs all interactions
+- Tracks kubectl history
+- Assists in troubleshooting
+- Provides terminal and dashboard
 
-### 4. Paralus dashboard
-- shows what you can access
-- can manage many clusters at once
+---
 
-### 5. If a dev leaves
-- it is a one-click experience to remove from groups
-- See access history
-- Open Paralus dashboard
+## Day Two Operations
+
+☆ Dev Saim accesses Paralus dashboard, logs in via SSO
+  - Dev can only see the namespace they have access to
+  - Layer between devs and clusters
+
+☆ DevOps engineers can use predefined roles instead of building their own
+
+☆ Devs can customize their dashboard and workspaces based on org policies
+
+☆ Paralus dashboard shows dev what access they have to many clusters at once
+
+☆ If a dev leaves, it is a one-click experience to remove permissions
+
+☆ Troubleshoot from the Paralus dashboard
+
+☆ See access history from Paralus dashboard
