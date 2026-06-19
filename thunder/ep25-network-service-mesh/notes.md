@@ -6,6 +6,8 @@ K8s networking model was new
 - L2 - ethernet layer
 - L3 - IP address layer — K8s starts here
 
+*(L2, L3, L7, etc. refer to layers of the [OSI model](https://en.wikipedia.org/wiki/OSI_model).)*
+
 - In Kubernetes, every pod can talk to every other pod by IP.
 - Can isolate pods through network policy, therefore labels/selectors.
 - Kubernetes service can provide stable IP to a set of pods.
@@ -45,7 +47,7 @@ A technology that allows workloads to connect to zero or more network services, 
 
 ---
 
-## Use Cases for NSM
+## Use Cases for Network Service Mesh (NSM)
 
 - Connect workloads only
 - Connect inner organizational services (example: a car company and a parts supplier)
