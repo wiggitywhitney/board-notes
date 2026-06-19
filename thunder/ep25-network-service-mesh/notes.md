@@ -2,7 +2,9 @@
 
 ## Before Network Service Mesh...
 
-Kubernetes networking model was new: L2 Ethernet layer, L3 IP address layer. Kubernetes starts here:
+K8s networking model was new
+- L2 - ethernet layer
+- L3 - IP address layer — K8s starts here
 
 - In Kubernetes, every pod can talk to every other pod by IP.
 - Can isolate pods through network policy, therefore labels/selectors.
