@@ -2,89 +2,79 @@
 
 ## Before Network Service Mesh...
 
-- K8s networking model was never designed for:
-  - L2 - ethernet layer
-  - L3 - IP address layer — K8s addresses this
-    - K8s can handle Pod-to-Pod by IP
-    - Network Policy
-    - K8s can provide public IPs
+Kubernetes networking model was new: L2 Ethernet layer, L3 IP address layer. Kubernetes starts here:
 
-K8s model is GREAT — especially with [illegible]
+- In Kubernetes, every pod can talk to every other pod by IP.
+- Can isolate pods through network policy, therefore labels/selectors.
+- Kubernetes service can provide stable IP to a set of pods.
 
-Service meshes were starting to be built at L7 (applications)
+> K8s model is GREAT... except when it's not. No flexibility.
 
-Problems:
-- workloads in different [illegible]
-- Workloads tightly coupled
-- [illegible — telecommunications context]
-- Workloads needing to process packets at the L3 layer
+Service meshes were starting to be built at L7 (application problems):
+
+- More expensive to process at L7.
+- Hard to move traffic between workloads in different clusters and/or cloud providers.
+- Workloads are tightly coupled with Kubernetes networking.
+- Telecommunications companies want to process at the L2/L3 layers.
 
 ---
 
 ## A Network Service is
 
-Something that:
-- processes packets [?]
-- adds security, Networking, observability
-- Anything that accepts IP packets & does *something*
-
-The cloud doesn't know if a Network Service is running
-
-### The blessed things providing the Network Service could be:
-- pod that processes packets
-- VM or physical server
-
-*The cloud doesn't know if a Network Service is running*
+Something that processes IP packets (L3) and adds security, networking, and observability. Anything that accepts IP packets and does something.
 
 ---
 
 ## Network Service Mesh is
 
-A technology that allows Workloads to connect to Zero or more Network Services while the workload is running
+A technology that allows workloads to connect to zero or more network services, independent of where the workload is running.
+
+**User experience:** add a single line annotation to a Kubernetes pod, for example, that names the network service I want to connect to. L4 is the transport layer (TCP/IP).
 
 ---
 
-## User Experience
+## The blessed thingy that is providing the Network Service could be:
 
-- add a single line annotation to K8s pod (for example)
-- that says: I want to connect to [a network service]
-- L4 is transparent layer [?]
+- Pod that processes packets
+- VMs or physical servers
+- Physical routers and switches
+
+> The client doesn't know or care where the Network Service is running.
 
 ---
 
 ## Use Cases for NSM
 
-Examples:
-- connect [inter-organizational] Services
-- Connect multi-cloud apps
-- when a company wants to process packets at [?]
-- K8s [gives] an easy API [?]
+- Connect workloads only
+- Connect inner organizational services (example: a car company and a parts supplier)
+- Connect multi-cloud apps to, say, a database that uses a funky protocol, possibly by connecting to an application service mesh
+- When a company wants to process packets (example: telecommunications)
+
+Kubernetes setup is an easy `kubectl apply` command.
 
 ---
 
 ## Network Service Registry
 
-- easy to add a Network Service
-- makes it discoverable
-- Uses SPIFFE/SPIRE for [identity]
+- Easy to add a network service and make it discoverable
+- Uses SPIFFE/SPIRE for workload authentication and OPA for authorization
 
 ---
 
-## Application Service Meshes (Istio, Kuma, Linkerd?)
+## Application Service Meshes (Istio, Kuma, LinkerD) vs. NSM
 
-- operating at: L7 — TCP, UDP
-- NSM operating at: L3, L2
-- APP meshes are designed [if deployed the same way]
+- App mesh is mostly operating at L7 (HTTP, etc.)
+- NSM is operating at L3, usually sometimes L2
+- App meshes are only one per workload and typically one per cluster
+- In NSM, a workload can connect to many network services
+  - Can connect to services in different orgs
+  - Mutually ignorant things coexisting
 
-In NSM, a workload can:
-- Connect to zero or more Network Services
-- possibly by [illegible]
-- designed to [connect across different or same cluster]
-
-L3 provides a single flat [unified network]
-- NSM provides the same
-- HTTP provides [illegible]
+NSM scales fabulously well at internet scale.
 
 ---
 
-## NSM + APP meshes ARE COMPLEMENTARY
+## NSM and App Meshes Are Complementary
+
+- L3 provides a single flat connectivity domain across systems, a hard problem to solve at L7
+- L7 provides complex routing and fun HTTP reasoning
