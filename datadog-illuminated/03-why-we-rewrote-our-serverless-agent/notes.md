@@ -3,13 +3,30 @@
 ## The Problem Space
 
 - AWS Lambda is weird
-  - CPU gets frozen btwn requests
-  - very small resources
-  - isolated sandboxes
+  - CPU gets frozen between requests
+  - Very small resources
+  - Isolated sandboxes
 - Datadog Agent
-  - designed to be long-running
-  - large binary - 55mb
+  - Designed to be long-running
+  - Large binary - 55mb
   - 400ms+ to start up
+
+## Why Rewrite?
+
+- Make agent lighter, ~20% of code needed
+- Eliminate upstream bugs
+- Switch to RUST
+  - No garbage collection
+  - Small binaries / low memory
+  - Fast startup
+  - Memory safety
+- Also more reasons we'll say later *(Suspense)*
+
+## Challenges
+
+- No RUST knowledge
+
+## Before / After
 
 ### Before
 
@@ -20,35 +37,18 @@
 ### After
 
 ```text
-|50ms init|— function runs —|
-     ↓          ↓         ↓
-     send data to Datadog - during I/O waits!
+|50ms init|——— function runs ———|   ← Continuous flushing
+              ↓      ↓      ↓
+     Send data to Datadog - during I/O waits!
 ```
-
-← Continuous flushing
-
-## Why Rewrite?
-
-- make agent lighter, ~20% of code needed
-- eliminate upstream bugs
-- switch to RUST
-  - no garbage collection
-  - small binaries / low memory
-  - fast startup
-  - memory safety
-- Also more reasons we'll say later *(Suspense)*
-
-## Challenges
-
-- no RUST knowledge
 
 ## Results
 
-- improved startup time! 400ms → 50ms
-- decreased binary size! 55mb → 7mb
-- memory reduced by 50%
+- Improved startup time! 400ms → 50ms
+- Decreased binary size! 55mb → 7mb
+- Memory reduced by 50%
 - 2x reduction in tail latency
-- safe rollout procedure
-  - ship RUST + GO binaries together
-  - failover to old GO version
-- rolled out in under a year!
+- Safe rollout procedure
+  - Ship RUST + GO binaries together
+  - Failover to old GO version
+- Rolled out in under a year!
