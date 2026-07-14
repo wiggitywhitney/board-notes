@@ -4,13 +4,12 @@ malicious code ≠ vulnerabilities
 
 ## The Attack Surface
 
-**Vector 1** ⚡ pull request
-example: exfiltrate secrets via CI config
+- **Vector 1** ⚡ pull request
+  - example: exfiltrate secrets via CI config
+- **Vector 2** ⚡ packages
+  - example: attacker compromises package maintainer, backdoor ships in next update
 
-**Vector 2** ⚡ packages
-example: attacker compromises pkg maintainer, backdoor ships in next update
-
-BewAIre is software that automatically analyzes pull requests and packages to detect malicious changes
+BewAIre is software that automatically analyzes <u>pull requests</u> and <u>packages</u> to detect <u>malicious changes</u>
 
 ## How It Works
 
@@ -23,9 +22,9 @@ flowchart TD
         F["① pre-filter — fast, cheap<br/>ex GPT mini<br/>&quot;Suspicious or not?&quot;<br/>(single-turn)"]
         E["② AI-powered escalation<br/>ex Claude Opus<br/>looks at author info, comments,<br/>metadata, dependencies, etc..<br/>(full agentic flow)"]
         F -- suspicious --> E
-        F -- fine --> EXIT["exit — a bit exits here<br/>0.02% escalated to human review<br/>99.98% filtered out!!"]
+        F -- "fine — 99.98% filtered out" --> EXIT["exit"]
     end
-    E --> V["returns verdict + reason<br/>malicious or benign"]
+    E -- "0.02% escalated to human review" --> V["returns verdict + reason<br/>malicious or benign"]
     V --> H["human triage — security incident team / security research team"]
 ```
 
