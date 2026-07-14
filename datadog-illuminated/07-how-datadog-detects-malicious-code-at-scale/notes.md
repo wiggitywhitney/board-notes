@@ -33,8 +33,8 @@ flowchart TD
 ☆ Scanning every PR event<br/>
 ☆ Scanning every package release<br/>
 
-scales because of this fast + cost effective step<br/>
-also scales because of this step's precision
+scales because of the fast + cost effective step 1 ↑<br/>
+also scales because of step 2's precision ↑
 
 ## BewAIre Detects:
 
