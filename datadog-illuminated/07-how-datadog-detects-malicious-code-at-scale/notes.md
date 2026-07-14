@@ -30,18 +30,18 @@ flowchart TD
 
 ## How It Scales
 
-✱ Scanning every PR event
-✱ Scanning every package release
+☆ Scanning every PR event<br/>
+☆ Scanning every package release<br/>
 
-scales because of this fast + cost effective step
+scales because of this fast + cost effective step<br/>
 also scales because of this step's precision
 
 ## BewAIre Detects:
 
-✱ token exfiltration!
-✱ encoded payloads!
-✱ backdoors!
-✱ typosquatting!
+☆ token exfiltration!<br/>
+☆ encoded payloads!<br/>
+☆ backdoors!<br/>
+☆ typosquatting!<br/>
 AND MORE!
 
 ## What's Next:
