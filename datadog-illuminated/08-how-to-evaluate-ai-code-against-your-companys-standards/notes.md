@@ -10,24 +10,28 @@
 
 💭 "I want my coding agent to follow Datadog standards"
 
-I've tried: writing skills! steering documents! context!
+I've tried:
+- Writing Skills
+- Steering Documents
+- Context
+
 But is it working?
 
-**asks** "is it good" → ADEEP
-ADEEP **returns score + reasoning** → DEV
+Ask ADEEP: is it good?
+ADEEP returns: score and reasoning
 
 ### PLAT ENG
 
 💭 "I want my service to be used optimally by AI agents"
 
-BUT I DONT KNOW is it
-- SIGNAL: used effectively?
-- COMPARISON: which model and/or harness is best?
-- HISTORY: any regressions?
+But I don't know:
+- Signal: Is it used effectively?
+- Comparison: Which model and/or harness is best?
+- History: Any regressions for each of those questions?
 
 **I'll WRITE AN ADEEP EVAL!**
 
-This **informs** ADEEP, and writing an eval **extends ADEEP**.
+Writing an eval extends ADEEP, and ADEEP eval results inform the Platform Engineer.
 
 ### Senior leadership
 
@@ -44,10 +48,10 @@ RETURNS A SCORE + REASONING
 ### Benefits of ADEEP
 
 - ⭐ Shows org-wide AI trends
-- ⭐ pinpoint regressions
+- ⭐ Pinpoint regressions
 - ⭐ Compare AI tools for specific tasks
-- ⭐ cost efficiency
-- ⭐ optimize context
-- ⭐ encodes Datadog's knowledge
-  - repeatable
-  - sharable
+- ⭐ Cost efficiency
+- ⭐ Optimize context
+- ⭐ Encodes Datadog's knowledge
+  - Repeatable
+  - Sharable
