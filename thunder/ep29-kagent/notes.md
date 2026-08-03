@@ -1,42 +1,45 @@
+**kagent is an open-source programming framework for developers and platform engineers to build and run AI agents on Kubernetes.**
+
 ## Before kagent
 
-- Knowledge lies only w domain experts (at first K8s networking knowledge)
-- LLMs getting wide adoption (& MCP)
+- Knowledge lies only with domain experts (at first Kubernetes networking knowledge)
+- LLMs getting wide adoption (and MCP)
 - folks using coding agents locally
 
-kagent is open source programming framework for developers + platform engineers to build + run AI agents on Kubernetes
+kagent also deploys agents into your cluster
 
-kagent also deploys Agents into your cluster
-ex Istio, Cilium, Argo Rollouts, Prometheus Kubernetes troubleshooting
+Example: Istio, Cilium, Argo Rollouts, Prometheus, Kubernetes troubleshooting
 
-## K8s CRD = kagent config
+## kagent config
 
-you can say:
-- type of agent
-  ex use a kagent one or BYO, etc..
-- prompt
-- description
-- which model
-- tools
-  BYO or kagent provides 100+ kubectl get, kubectl describe
-  can specify "HUMAN IN THE LOOP"
-  - AI Agent skills
+### Kubernetes CRD
 
-BYO can be custom or 3rd party
+You can define:
 
-Kagent has a CLI & WebUI + MCP interfaces
+1. type of agent
+   - example: use a kagent one or BYO, etc.
+2. prompt
+3. description
+4. which model
+5. tools
+   - BYO or kagent provides hundreds
+     - example: kubectl get, kubectl describe
+   - BYO can be custom or third-party
+6. can specify human in the loop
+7. AI agent skills
 
-Agent Custom Resource creates Pod, Service, service acct — very customizable
+Kagent has a CLI, WebUI, and MCP interfaces
 
-## kagent controller watches:
+## kagent controller watches: Agent CRD (described above)
 
-- Agent CRD
-- MCPServer CRD
-- RemoteMcpServer CRD
-- ModelConfig CRD
+- MCP Server CRD
+- Remote MCP Server CRD
+- Model Config CRD
 - etc.
 
-↳ creates K8s resources to Run these things
+Creates Kubernetes resources to run these things
+
+- example: Agent Custom Resource creates Pod, Service, Service Account (very customizable)
 
 ## Agent Sandbox
 
@@ -46,33 +49,31 @@ Agent Custom Resource creates Pod, Service, service acct — very customizable
 
 ## Agent Runtimes
 
-Default: Google Agent Development Kit
-Also supports: Crewai & LangGraph
+- Default: Google Agent Development Kit
+- Also supports: CrewAI and LangGraph
 
 ## Why run your agent on Kubernetes?
 
-- for long-running agents
-- to watch K8s (performance, cost, etc..)
-- high availability
-- integration w CNCF tooling
-
-Declarative Experience
+1. for long-running agents
+2. to watch Kubernetes (performance, cost, etc.)
+3. high availability
+4. integration with CNCF tooling
+5. declarative experience
 
 ## AUTH
 
 Identities, Policies are important
-- context L8 layer
-- L7 network layer
+
+- new context layer
+- L7
+  - network layer
 
 ## How do people use kagent?
 
-- creating agents to help share company-specific K8s/platform knowledge
-  ex operate, troubleshoot underlying CNCF agents
+1. Creating agents to help share company-specific Kubernetes/platform knowledge
+   - example: operate/troubleshoot underlying CNCF agents
+2. What kagent adds:
+   - Connect to Slack or ticket system to find patterns and reduce toil
+   - kagent easily connects third-party tools without writing code
 
-kagent adds: connect to Slack or ticket system to find patterns & reduce toil
-
-kagent adds: easily connect 3rd party tools w/o writing code
-
-endorse open standards
-
-kagent is a framework to help you make agents + run them in K8s w the YAML you already know — SIMPLICITY
+kagent is a framework to help you make agents and run them in Kubernetes with the YAML you already know — Simplicity
