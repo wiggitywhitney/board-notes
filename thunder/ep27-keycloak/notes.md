@@ -42,13 +42,14 @@ UI organized by Realms
 - for example:
   - production realm
   - internal users + apps
-  (or use different Keycloak instances)
+- or use different Keycloak instances
 
 *(find Alex in CNCF Slack)*
 
-- access token = usually used to access services (opaque)
-- identity token = describes identity of user
-- refresh token = can be used to get new access tokens w/o login
+## Types of tokens
+- Access token = usually used to access services (opaque)
+- Identity token = describes identity of user
+- Refresh token = can be used to get new access tokens without login
 
 ## Open ID Connect Flow → very easy to integrate w Keycloak
 THREE PARTIES
@@ -63,7 +64,7 @@ sequenceDiagram
     User->>Keycloak: new url
     Keycloak->>Keycloak: 3 Keycloak starts login flow (highly customizable)
     Keycloak->>User: 4 Keycloak completes login flow + authenticates user
-    Keycloak->>User: 5 Keycloak redirects to users browser with an access code
+    Keycloak->>Application: 5 Keycloak redirects to app via user's browser with an access code
     Application->>Keycloak: 6 APP calls Keycloak to exchange access code & receive access token + identity token + refresh token
     Application->>User: 7 user has access to application!
 ```
@@ -72,12 +73,13 @@ sequenceDiagram
 2. application redirects browser to keycloak
 3. Keycloak starts login flow (highly customizable)
 4. Keycloak completes login flow + authenticates user
-5. Keycloak redirects to users browser with an access code
+5. Keycloak redirects to app via user's browser with an access code
 6. APP calls Keycloak to exchange access code & receive access token + identity token + refresh token
 7. user has access to application!
 
 ## Keycloak Benchmark Project!
 - generate data for load testing
-- load driver creates concurrent logins
+- load driver
+  - creates concurrent logins
 - describes how to use the metrics
 - comes w/ setup & best practices
