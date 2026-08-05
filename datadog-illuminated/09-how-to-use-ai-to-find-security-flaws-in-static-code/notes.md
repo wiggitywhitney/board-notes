@@ -14,7 +14,7 @@ AI-Native SAST uses LLMs to reason about code instead of relying on patterns
 Finds vulnerabilites without so many false positives & with more context
 
 **UNDERSTANDS**
-- code semantics, data/execution flow, code usage, context
+- code semantics, data/excution flow, code usage, context
 
 ---
 
@@ -40,7 +40,7 @@ AI-Native SAST improved Datadog's OWASP score by 50%
 - ★ Doesn't Analyze whole repo
 - ★ uses cached results
 - use heuristics, keywords
-- **EX**: Flags a file w an input going straight to [illegible]
+- **EX**: Flags a file w an input going straight to LLM
 
 ## How It Works
 
