@@ -35,10 +35,22 @@ AI-Native SAST improved Datadog's OWASP score by 50%
 
 ### Step 1: Identify Relevant Files
 
+(NO LLM)
+
 - ★ Doesn't Analyze whole repo
 - ★ uses cached results
 - use heuristics, keywords
 - **EX**: Flags a file w an input going straight to [illegible]
+
+## How It Works
+
+### Step 2: Get Context
+
+(NO LLM)
+
+- Builds context for data flow analysis
+- cross-file context
+- **EX**: build context for the file that was flagged in step 1. Sees that user logs direct to LLM
 
 ### Step 3: AI Analysis
 
@@ -53,16 +65,6 @@ AI-Native SAST improved Datadog's OWASP score by 50%
 - output: yes or no with reasoning
 - What, Where, Why, When
 - **EX**: Traces full flow. Confirms issue & says why
-
-## How It Works
-
-### Step 2: Get Context
-
-(arrow → NO LLM)
-
-- Builds context for data flow analysis
-- cross-file context
-- **EX**: build context for the file that was flagged in step 1. Sees that user logs direct to LLM
 
 ### Step 4: Post-processing
 
@@ -80,10 +82,8 @@ AI-Native SAST improved Datadog's OWASP score by 50%
 
 ```mermaid
 flowchart LR
-    Step1["Step 1: Identify Relevant Files"] --> NoLLM["NO LLM"]
-    Step1 --> Step3
-    NoLLM --> Step2["Step 2: Get Context"]
-    Step3["Step 3: AI Analysis (A: Fast+Cheap pass / B: Thorough pass)"] --> Step2
-    Step2 --> Step4["Step 4: Post-processing"]
+    Step1["Step 1: Identify Relevant Files (No LLM)"] --> Step2["Step 2: Get Context (No LLM)"]
+    Step2 --> Step3["Step 3: AI Analysis (A: Fast+Cheap pass / B: Thorough pass)"]
+    Step3 --> Step4["Step 4: Post-processing"]
     Step4 --> SARIF["Output: SARIF File"]
 ```
