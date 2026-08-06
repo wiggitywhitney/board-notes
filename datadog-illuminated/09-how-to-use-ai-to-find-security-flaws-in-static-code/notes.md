@@ -9,27 +9,30 @@
 
 ---
 
-AI-Native SAST uses LLMs to reason about code instead of relying on patterns
+## AI-Native SAST
 
-Finds vulnerabilities without so many false positives & with more context
+AI-Native SAST uses LLMs to reason about code instead of relying on patterns. It finds vulnerabilities without so many false positives and with more context.
 
 **UNDERSTANDS**
-- Code semantics, data/execution flow, code usage, context
+- Code semantics
+- Data/execution flow
+- Code usage
+- Context
 
 ---
 
-**EXAMPLE USE CASE**
-Devs make a service that feeds app logs to an LLM for sentiment analysis & categorization
+**EXAMPLE**
+Devs make a service that feeds app logs to an LLM for sentiment analysis and categorization
 
 ---
 
-**OWASP** - Open Web Application Security Project
+**OWASP Benchmark** → Industry standard
 
-**Benchmark** → Industry standard
+**O**pen **W**eb **A**pplication **S**ecurity **P**roject
 
-AI-Native SAST improved Datadog's OWASP score by 50%
+AI-Native SAST improved Datadog's OWASP score by 50%.
 
-## AI-Native SAST
+## AI-Native SAST: How It Works
 
 *Triggered by Git operations*
 
@@ -40,9 +43,7 @@ AI-Native SAST improved Datadog's OWASP score by 50%
 - ★ Doesn't Analyze whole repo
 - ★ Uses cached results
 - Use heuristics, keywords
-- **EX**: Flags a file w an input going straight to LLM
-
-## How It Works
+- **EXAMPLE**: Flags a file w an input going straight to LLM
 
 ### Step 2: Get Context
 
@@ -50,21 +51,21 @@ AI-Native SAST improved Datadog's OWASP score by 50%
 
 - Builds context for data flow analysis
 - Cross-file context
-- **EX**: Build context for the file that was flagged in step 1. Sees that user logs direct to LLM
+- **EXAMPLE**: Build context for the file that was flagged in step 1. Sees that user logs direct to LLM
 
 ### Step 3: AI Analysis
 
 **A** — Fast + Cheap LLM pass
 - Yes or no, smaller model
 - More false positives
-- **EX**: Sees no sanitization → (FLAG)
+- **EXAMPLE**: Sees no sanitization → (FLAG)
 
 **B** — Thorough LLM pass
 - Reasoning model
 - Deep analysis
 - Output: yes or no with reasoning
 - What, Where, Why, When
-- **EX**: Traces full flow. Confirms issue & says why
+- **EXAMPLE**: Traces full flow. Confirms issue and says why
 
 ### Step 4: Post-processing
 
@@ -73,17 +74,23 @@ AI-Native SAST improved Datadog's OWASP score by 50%
 **FIRST: CACHE RESULTS** ★
 - If Benign → Drop it
 - If Vulnerable → Keep, and...
-- , Output SARIF file
-- Use SARIF file to surface issues to users as alert, in IDE, in pull request in Datadog UI
-- **EX**: Results surfaced to devs w/ reasoning + actionable steps
+  - Output SARIF file
+- Use SARIF file to surface issues to users
+  - Alert
+  - IDE
+  - Pull request
+  - Datadog UI
+- **EXAMPLE**: Results surfaced to devs w/ reasoning + actionable steps
 
-**OPTIMIZING COST** ★ = cost optimizing
+**OPTIMIZING COST**
+★ = cost optimizing
 - ★ Full repo scanned only at onboarding
 
 ```mermaid
 flowchart LR
     Step1["Step 1: Identify Relevant Files (No LLM)"] --> Step2["Step 2: Get Context (No LLM)"]
-    Step2 --> Step3["Step 3: AI Analysis (A: Fast+Cheap pass / B: Thorough pass)"]
-    Step3 --> Step4["Step 4: Post-processing"]
-    Step4 --> SARIF["Output: SARIF File"]
+    Step2 --> Step3A["Step 3A: Fast + Cheap LLM Pass"]
+    Step2 --> Step3B["Step 3B: Thorough LLM Pass"]
+    Step3A --> Step4["Step 4: Post-processing (Output: SARIF File)"]
+    Step3B --> Step4
 ```
