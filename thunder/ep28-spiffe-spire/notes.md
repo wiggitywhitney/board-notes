@@ -28,6 +28,7 @@ graph TD
     end
     Who --> Identity[IDENTITY] --> Spiffe((SPIFFE))
     What --> Action[ACTION] --> Frameworks(["Typically managed by policy frameworks (like OPA)"])
+    PolicyResult --> Frameworks
 
     style Spiffe fill:#f9c,stroke:#333,stroke-width:2px
 ```
