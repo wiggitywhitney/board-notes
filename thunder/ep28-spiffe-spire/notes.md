@@ -1,21 +1,20 @@
-## Before SPIFFE Workloads Communicated
+## Before SPIFFE
 
-- Service tokens
-  - need to be stored
-  - sometimes hard coded
-  - hackers can extract
-- mTLS
-  - certificates have to be managed/rotated
-
-Tokens used to verify.
-
-Certificates used to verify.
+- Workloads communicated
+  - via service tokens
+    - need to be stored
+    - sometimes hard coded
+    - hackers can extract
+  - via mTLS
+    - certificates have to be managed/rotated
+- Tokens used to verify tokens.
+- Certificates used to verify certificates.
 
 ---
 
 ## SPIFFE Definition
 
-**<u>S</u>**ecure **<u>P</u>**roduction **<u>I</u>**dentity **<u>F</u>**ramework **<u>F</u>**or **<u>E</u>**veryone (SPIFFE) is a standard for securing and identifying workloads in a production environment. It's a secure and automated way to manage identity.
+<u><strong>S</strong></u>ecure <u><strong>P</strong></u>roduction <u><strong>I</strong></u>dentity <u><strong>F</strong></u>ramework <u><strong>F</strong></u>or <u><strong>E</strong></u>veryone (SPIFFE) is a standard for securing and identifying workloads in a production environment. It's a secure and automated way to manage identity.
 
 ---
 
@@ -25,8 +24,6 @@ Certificates used to verify.
 graph TD
     Who[WHO] --> Identity[IDENTITY] --> Spiffe[SPIFFE]
     What[WHAT] --> Action[ACTION] --> Frameworks["Typically managed by policy frameworks (like OPA)"]
-    Spiffe --> Policy[POLICY]
-    Frameworks --> Policy
 ```
 
 Identity is best added to processes.
@@ -65,7 +62,7 @@ BEST TO ADD IDENTITY TO PROCESSES (WORKLOADS)
 
 ## SVID
 
-**<u>S</u>**PIFFE **<u>V</u>**erifiable **<u>I</u>**dentity **<u>D</u>**ocument
+<u><strong>S</strong></u>PIFFE <u><strong>V</strong></u>erifiable <u><strong>I</strong></u>dentity <u><strong>D</strong></u>ocument
 
 - A bundle of PKI certs/keys
 - SVIDs are short-lived
@@ -99,7 +96,7 @@ BEST TO ADD IDENTITY TO PROCESSES (WORKLOADS)
 
 ## SPIRE Definition
 
-**<u>S</u>****<u>P</u>****<u>I</u>**FFE **<u>R</u>**untime **<u>E</u>**nvironment (SPIRE) is a reference implementation.
+<u><strong>S</strong></u><u><strong>P</strong></u><u><strong>I</strong></u>FFE <u><strong>R</strong></u>untime <u><strong>E</strong></u>nvironment (SPIRE) is a reference implementation.
 
 - SPIRE Server talks to SPIRE Agent
 - Each SPIRE Agent has its own Workload API
