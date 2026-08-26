@@ -1,90 +1,107 @@
-## Before SPIFFE...
+## Before SPIFFE Workloads Communicated
 
-workloads communicated:
+- Service tokens
+  - need to be stored
+  - sometimes hard coded
+  - hackers can extract
+- mTLS
+  - certificates have to be managed/rotated
 
-w/ service tokens
-- need to be stored
-- sometimes hard coded
-- hackers can extract
+Tokens used to verify.
 
-via mTLS
-- certificates have to be managed/rotated
+Certificates used to verify.
 
-tokens used to verify / certificates used to verify
+---
 
-Secure Production Identity Framework For Everyone (SPIFFE) is a standard for securing + identifying workloads in a production environment (secure + automated way to manage identity)
+## SPIFFE Definition
 
-SPIFFE Runtime Environment (SPIRE) is a reference implementation
-
-SPIRE SERVER talks to SPIRE AGENT
-
-EACH SPIRE AGENT has its own WORKLOAD API
+**<u>S</u>**ecure **<u>P</u>**roduction **<u>I</u>**dentity **<u>F</u>**ramework **<u>F</u>**or **<u>E</u>**veryone (SPIFFE) is a standard for securing and identifying workloads in a production environment. It's a secure and automated way to manage identity.
 
 ---
 
 ## WHO + WHAT = POLICY
 
-IDENTITY → ACTION → (typically managed by policy frameworks (like OPA))
+```mermaid
+graph TD
+    Who[WHO] --> Identity[IDENTITY] --> Spiffe[SPIFFE]
+    What[WHAT] --> Action[ACTION] --> Frameworks["Typically managed by policy frameworks (like OPA)"]
+    Spiffe --> Policy[POLICY]
+    Frameworks --> Policy
+```
 
-SPIFFE
+Identity is best added to processes.
 
-Identity best added to processes
-
-[diagram: three boxes labeled PODS connecting down to a HOST layer (ex K8s), connecting down to a Machine layer (ex VM)]
+```mermaid
+graph TB
+    subgraph Machine["Machine (ex: VM)"]
+        subgraph Host["Host (ex: Kubernetes)"]
+            subgraph Pod1["Pod"]
+                Proc1["process"]
+            end
+            subgraph Pod2["Pod"]
+                Proc2["process"]
+            end
+            subgraph Pod3["Pod"]
+                Proc3["process"]
+            end
+        end
+    end
+```
 
 Identity can be added to any layer, but...
-
-- Machine layer doesn't play well w/ other machines
-- Host layer deals w/ IP Addresses, but those can change
+- Machine layer doesn't play well with other machines
+- Host layer deals with IP addresses, but those can change
 
 BEST TO ADD IDENTITY TO PROCESSES (WORKLOADS)
 
 ---
 
-## SPIFFE is designed to solve these problems:
+## SPIFFE Is Designed to Solve These Problems
 
-- standard for formatting an ID = SPIFFE ID
-  It looks like a URL
-
+- Standard for formatting an ID = SPIFFE ID (it looks like a URL)
 - SPIFFE Verify = proves that a workload is what it claims to be
-  SVID PKI bundle of certs/keys
-
-- WORKLOAD API gives SVIDS to workloads
-
-  First, WORKLOADS ATTEST themselves in order to gain access to the WORKLOAD API
-
-  (USER configures how attestations are verified)
-
-- WORKLOAD API can verify the attestation by querying other stuff in the env
-  ex - might query kubelet
-  - might query OS
-  - might check SHA hash
-  - plug-ins used here
-
-SVID = SPIFF VERIFIABLE IDENTY DOCUMENT
 
 ---
 
-## Once this process is complete,
+## SVID
 
-WORKLOAD API issues SVID
+**<u>S</u>**PIFFE **<u>V</u>**erifiable **<u>I</u>**dentity **<u>D</u>**ocument
 
-Also rotating, revoking, distributing, compartmentalizing SVID
+- A bundle of PKI certs/keys
+- SVIDs are short-lived
+- If two workloads each have their own SVIDs, they can establish a secure connection between each other
 
-SVIDS ARE short lived
+---
 
-IF 2 workloads each have their own SVIDS they can establish a secure connection between each other
+## Workload API
+
+- Workloads attest themselves in order to gain access to the Workload API
+- Workload API gives SVIDs to workloads
+- User configures how attestations are verified
+- Workload API can verify the attestation by querying other stuff in the environment
+  - Examples: might query kubelet, might query OS, might check SHA hash, plug-ins used here
+- Once this process is complete, Workload API issues SVID
+- Workload API rotates, revokes, distributes, and compartmentalizes the SVID
+
+---
 
 ## Benefits of SPIFFE
 
-- well supported
+- Well supported
 - Neither your platform nor your workloads need certificates/tokens
-  THERE IS NO SPOON
-- SPIFFE manages potentially complex cross-platform/cross-cloud identity layer
+  - There is no spoon
+- SPIFFE manages a potentially complex cross-platform/cross-cloud identity layer
 - No more need for secrets management
-- scales well
-- short lived SVIDs are more secure than long-lived X509 certs
+- Scales well
+- Short lived SVIDs are more secure than long-lived X509 certs
 
-SPIRE SERVER - typically a stateful set, this software stores + distributes SVIDs
+---
 
-SPIRE AGENTS - typically a daemon set, receives SVIDs from server and exposes WORKLOAD API + does the work of verifying workloads + giving them SVIDs
+## SPIRE Definition
+
+**<u>S</u>****<u>P</u>****<u>I</u>**FFE **<u>R</u>**untime **<u>E</u>**nvironment (SPIRE) is a reference implementation.
+
+- SPIRE Server talks to SPIRE Agent
+- Each SPIRE Agent has its own Workload API
+- SPIRE Server - typically a stateful set, this software stores and distributes SVIDs
+- SPIRE Agents - typically a daemon set, receives SVIDs from server and exposes Workload API, and does the work of verifying workloads and giving them SVIDs
