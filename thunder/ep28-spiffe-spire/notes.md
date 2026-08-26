@@ -22,8 +22,14 @@
 
 ```mermaid
 graph TD
-    Who[WHO] --> Identity[IDENTITY] --> Spiffe[SPIFFE]
-    What[WHAT] --> Action[ACTION] --> Frameworks["Typically managed by policy frameworks (like OPA)"]
+    subgraph Equation[" "]
+        direction LR
+        Who((WHO)) --- Plus["+"] --- What((WHAT)) --- Equals["="] --- PolicyResult((POLICY))
+    end
+    Who --> Identity[IDENTITY] --> Spiffe((SPIFFE))
+    What --> Action[ACTION] --> Frameworks(["Typically managed by policy frameworks (like OPA)"])
+
+    style Spiffe fill:#f9c,stroke:#333,stroke-width:2px
 ```
 
 Identity is best added to processes.
