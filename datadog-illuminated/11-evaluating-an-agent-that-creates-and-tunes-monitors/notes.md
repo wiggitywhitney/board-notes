@@ -37,19 +37,25 @@ Known Issues for services + time window
 ### ① SNAPSHOT
 
 **Input:** Set of services + time window
+
 **Action:** Generate a monitor set
+
 **Output:** The monitors at the beginning of the time window
 
 ### ② REWIND + REPLAY
 
 **Input:** Monitors at beginning of time window
+
 **Action:** Evaluating those monitors across the whole time window
+
 **Output:** Alerts that happened during replay
 
 ### ④ COMPARE
 
 **Input:** Alerts + Known Issues
+
 **Action:** ① Compare each alert to Known Issues ② Investigate further if needed
+
 **Output:** Each alert classified:
 
 | | |
@@ -60,6 +66,7 @@ Known Issues for services + time window
 ### ⑤ SCORE
 
 **Input:** Classified alerts
+
 **Action:** Calculate
 
 ① **Precision:** How many alerts were good alerts?
@@ -70,5 +77,7 @@ Known Issues for services + time window
 ### ⑥ STORE + ANALYZE
 
 **Input:** This eval's score, plus all evals ever
+
 **Action:** Storing + analysis
+
 **Output:** monitor shape comparison, quality trends, detects regressions, ideas for improving Bits Detection
