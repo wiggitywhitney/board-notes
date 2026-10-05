@@ -36,24 +36,24 @@ flowchart TB
     GitHub["GitHub<br/>source of truth"]
     Mirror1["Mirror<br/>(sync + resolve changes)"]
     Mirror2["Mirror<br/>(sync + resolve changes)"]
-    Relay1["Relay<br/>(stay up to date w mirror)"]
-    Relay2["Relay<br/>(stay up to date w mirror)"]
+    subgraph Relays["Relays scale out the reads (autoscaling)"]
+        Relay1["Relay<br/>(stay up to date w mirror)"]
+        Relay2["Relay<br/>(stay up to date w mirror)"]
+    end
     LB["GitRetriever Load Balancer<br/>one single endpoint"]
     CI["CI JOBS"]
 
-    Mirror1 -- poll for changes --> GitHub
     GitHub -- changes as packfiles --> Mirror1
+    Mirror1 -- poll for changes --> GitHub
     GitHub <--> Mirror2
     Mirror1 --> Relay1
     Mirror2 --> Relay2
+    Relays ~~~ LB
+    LB ~~~ CI
+    LB --> Relays
     CI -- "git clone/git fetch<br/>new upstream" --> LB
     CI -- "lookup API<br/>file/SHA/Diff<br/>no clone needed" --> LB
-    LB --> Relay1
-    LB --> Relay2
 ```
-
-- autoscaling
-- Relays scale out the reads
 
 ---
 
