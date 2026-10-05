@@ -83,13 +83,12 @@ flowchart TB
 ```mermaid
 sequenceDiagram
     participant mirror
-    participant Relay
+    participant Relay as Relay<br/>(Auto-scaling)
     mirror->>Relay: gRPC: "Hey theres a new packfile X"
     Relay->>mirror: HTTP: "yo I want packfile X"
     mirror->>Relay: "Here you go!" (Resolved packfile)
 ```
 
-- Relay: Auto-scaling
 - \* this happens in parallel
 
 ---
