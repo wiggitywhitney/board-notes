@@ -61,9 +61,20 @@ flowchart TB
 
 ## mirror: a closer look
 
-| changed refs | parallel fetches | thin packfile | resolve once | resolved packfile |
-|---|---|---|---|---|
-| fetch changed refs in parallel + save to memory | | trade higher mirror CPU for speed | | reused by relays |
+<table>
+  <tr>
+    <th>changed refs</th>
+    <th>parallel fetches</th>
+    <th>thin packfile</th>
+    <th>resolve once</th>
+    <th>resolved packfile</th>
+  </tr>
+  <tr>
+    <td colspan="2" align="center">fetch changed refs in parallel + save to memory</td>
+    <td colspan="2" align="center">trade higher mirror CPU for speed</td>
+    <td align="center">reused by relays</td>
+  </tr>
+</table>
 
 ---
 
