@@ -34,13 +34,15 @@ reference (ref) = pointer to a commit
 ```mermaid
 flowchart TB
     GitHub["GitHub<br/>source of truth"]
-    Mirror1["Mirror<br/>(sync + resolve changes)"]
-    Mirror2["Mirror<br/>(sync + resolve changes)"]
-    subgraph Relays["Relays scale out the reads (autoscaling)"]
-        Relay1["Relay<br/>(stay up to date w mirror)"]
-        Relay2["Relay<br/>(stay up to date w mirror)"]
+    subgraph GitRetriever["GitRetriever"]
+        Mirror1["Mirror<br/>(sync + resolve changes)"]
+        Mirror2["Mirror<br/>(sync + resolve changes)"]
+        subgraph Relays["Relays scale out the reads (autoscaling)"]
+            Relay1["Relay<br/>(stay up to date w mirror)"]
+            Relay2["Relay<br/>(stay up to date w mirror)"]
+        end
+        LB["GitRetriever Load Balancer<br/>one single endpoint"]
     end
-    LB["GitRetriever Load Balancer<br/>one single endpoint"]
     CI["CI JOBS"]
 
     GitHub -- changes as packfiles --> Mirror1
