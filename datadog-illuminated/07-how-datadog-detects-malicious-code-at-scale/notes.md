@@ -9,7 +9,7 @@ malicious code ≠ vulnerabilities
 - **Vector 2** ⚡ packages
   - example: attacker compromises package maintainer, backdoor ships in next update
 
-BewAIre is software that automatically analyzes <u>pull requests</u> and <u>packages</u> to detect <u>malicious changes</u>
+BewAIre is software that automatically analyzes <ins>pull requests</ins> and <ins>packages</ins> to detect <ins>malicious changes</ins>
 
 ## How It Works
 
@@ -19,7 +19,7 @@ flowchart TD
     PKG["3rd party package source code"] --> API
     subgraph API["BewAIre API"]
         direction TB
-        F["① pre-filter — fast, cheap<br/>ex GPT mini<br/>&quot;Suspicious or not?&quot;<br/>(single-turn)"]
+        F["① pre-filter — fast, cheap<br/>ex GPT mini<br/>#quot;Suspicious or not?#quot;<br/>(single-turn)"]
         E["② AI-powered escalation<br/>ex Claude Opus<br/>looks at author info, comments,<br/>metadata, dependencies, etc..<br/>(full agentic flow)"]
         F -- suspicious --> E
         F -- "fine — 99.98% filtered out" --> EXIT["exit"]
